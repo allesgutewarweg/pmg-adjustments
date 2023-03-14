@@ -19,11 +19,11 @@ skip_rbl_checks 1
 [% IF pmg.spam.use_bayes.defined %]
 use_bayes [% pmg.spam.use_bayes %] 
 # ´central Bayes store
-bayes_store_module  Mail::SpamAssassin::BayesStore::SQL
-bayes_sql_dsn       DBI:mysql:sa_bayes:localhost
-bayes_sql_username sa_user
-bayes_sql_password SUPERGEHEIM
-bayes_sql_override_username sa_user
+# bayes_store_module  Mail::SpamAssassin::BayesStore::SQL
+# bayes_sql_dsn       DBI:mysql:sa_bayes:localhost
+# bayes_sql_username sa_user
+# bayes_sql_password SUPERGEHEIM
+#  bayes_sql_override_username sa_user
 [% END %]
 
 [% IF pmg.spam.bounce_score %]
