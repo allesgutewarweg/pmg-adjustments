@@ -362,22 +362,18 @@ ifplugin Mail::SpamAssassin::Plugin::DNSEval
 
     header    RCVD_IN_AMI_BLACK   eval:check_rbl_sub('ami', '^127\.0\.0\.(?:[23]|200)$')
     describe  RCVD_IN_AMI_BLACK   Received via a relay in Abusix Mail Intelligence Black
-    score     RCVD_IN_AMI_BLACK   3.0
     tflags    RCVD_IN_AMI_BLACK   net
 
     header    RCVD_IN_AMI_EXPLOIT eval:check_rbl_sub('ami', '127.0.0.4')
     describe  RCVD_IN_AMI_EXPLOIT Received via a relay in Abusix Mail Intelligence Exploit
-    score     RCVD_IN_AMI_EXPLOIT 3.0
     tflags    RCVD_IN_AMI_EXPLOIT net
 
     header    RCVD_IN_AMI_DYN     eval:check_rbl('ami-lastexternal', '<APIKEY>.combined.mail.abusix.zone.', '^127\.0\.0\.1[12]$')
     describe  RCVD_IN_AMI_DYN     Received via a relay in Abusix Mail Intelligence Dynamic
-    score     RCVD_IN_AMI_DYN     3.0
     tflags    RCVD_IN_AMI_DYN     net
 
     header    RCVD_IN_AMI_WHITE   eval:check_rbl('ami-firsttrusted', '<APIKEY>.combined.mail.abusix.zone.', '127.0.2.1')
     describe  RCVD_IN_AMI_WHITE   Received via a relay in Abusix Mail Intelligence White
-    score     RCVD_IN_AMI_WHITE   -0.1
     tflags    RCVD_IN_AMI_WHITE   nice net
 endif
 
@@ -385,15 +381,14 @@ ifplugin Mail::SpamAssassin::Plugin::URIDNSBL
     urirhsbl  URIBL_AMI_DBLACK    <APIKEY>.dblack.mail.abusix.zone. A
     body      URIBL_AMI_DBLACK    eval:check_uridnsbl('URIBL_AMI_DBLACK')
     describe  URIBL_AMI_DBLACK    Contains a spam URL listed in the Abusix Mail Intelligence domain blocklist
-    score     URIBL_AMI_DBLACK    3.0
     tflags    URIBL_AMI_DBLACK    net
 
     urirhssub URIBL_AMI_WHITE     <APIKEY>.white.mail.abusix.zone. A 127.0.2.1
     body      URIBL_AMI_WHITE     eval:check_uridnsbl('URIBL_AMI_WHITE')
     describe  URIBL_AMI_WHITE     Contains a domain listed in the Abusix Mail Intelligence domain whitelist
-    score     URIBL_AMI_WHITE     -0.1
     tflags    URIBL_AMI_WHITE     nice net
 endif
+
 ### 0spam ###
 
 header    NBL_0SPAM	 eval:check_rbl('nbl-0spam','nbl.0spam.org')
