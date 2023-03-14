@@ -177,16 +177,16 @@ ifplugin Mail::SpamAssassin::Plugin::SH
   # Redefining these rules even if they will -never- fire on a DQS installation.
   # This is needed because queries to the public mirrors will go underway even if the rules are zeroed
 
-  urirhssub       URIBL_DBL_BLOCKED_OPENDNS  6an4y4ij5korrobrx566croaxq.dbl.dq.spamhaus.net.       A   127.255.255.254
-  urirhssub       URIBL_DBL_BLOCKED  6an4y4ij5korrobrx566croaxq.dbl.dq.spamhaus.net.       A   127.255.255.255
+  urirhssub       URIBL_DBL_BLOCKED_OPENDNS  PRIVATEKEY.dbl.dq.spamhaus.net.       A   127.255.255.254
+  urirhssub       URIBL_DBL_BLOCKED  PRIVATEKEY.dbl.dq.spamhaus.net.       A   127.255.255.255
 
-  uridnssub URIBL_ZEN_BLOCKED_OPENDNS  6an4y4ij5korrobrx566croaxq.zen.dq.spamhaus.net.       A   127.255.255.254
-  uridnssub URIBL_ZEN_BLOCKED  6an4y4ij5korrobrx566croaxq.zen.dq.spamhaus.net.       A   127.255.255.255
+  uridnssub URIBL_ZEN_BLOCKED_OPENDNS  PRIVATEKEY.zen.dq.spamhaus.net.       A   127.255.255.254
+  uridnssub URIBL_ZEN_BLOCKED  PRIVATEKEY.zen.dq.spamhaus.net.       A   127.255.255.255
 
-  header RCVD_IN_ZEN_BLOCKED_OPENDNS    eval:check_rbl('zendqs-lastexternal', '6an4y4ij5korrobrx566croaxq.zen.dq.spamhaus.net.', '^127\.255\.255\.254$')
-  header RCVD_IN_ZEN_BLOCKED    eval:check_rbl('zendqs-lastexternal', '6an4y4ij5korrobrx566croaxq.zen.dq.spamhaus.net.', '^127\.255\.255\.255$')
+  header RCVD_IN_ZEN_BLOCKED_OPENDNS    eval:check_rbl('zendqs-lastexternal', 'PRIVATEKEY.zen.dq.spamhaus.net.', '^127\.255\.255\.254$')
+  header RCVD_IN_ZEN_BLOCKED    eval:check_rbl('zendqs-lastexternal', 'PRIVATEKEY.zen.dq.spamhaus.net.', '^127\.255\.255\.255$')
 
-  body          SH_DBL_ABUSED_FULLHOST  eval:check_sh_hostname('6an4y4ij5korrobrx566croaxq.dbl.dq.spamhaus.net', '^127\.0\.1\.10[2-6]$')
+  body          SH_DBL_ABUSED_FULLHOST  eval:check_sh_hostname('PRIVATEKEY.dbl.dq.spamhaus.net', '^127\.0\.1\.10[2-6]$')
   priority      SH_DBL_ABUSED_FULLHOST  -100 
   describe      SH_DBL_ABUSED_FULLHOST  A hostname found in the email body is listed in DBL as abused_legit
 
@@ -356,7 +356,7 @@ tflags SEM_URIRED net
 ### ABUSIX ###
 
 ifplugin Mail::SpamAssassin::Plugin::DNSEval
-    header    __RCVD_IN_AMI       eval:check_rbl('ami', 'PRIVATEKEY.combined.mail.abusix.zone.')
+    header    __RCVD_IN_AMI       eval:check_rbl('ami', 'PRIVATEKEY2.combined.mail.abusix.zone.')
     describe  __RCVD_IN_AMI       Received via a relay in Abusix Mail Intelligence
     tflags    __RCVD_IN_AMI       net
 
@@ -368,22 +368,22 @@ ifplugin Mail::SpamAssassin::Plugin::DNSEval
     describe  RCVD_IN_AMI_EXPLOIT Received via a relay in Abusix Mail Intelligence Exploit
     tflags    RCVD_IN_AMI_EXPLOIT net
 
-    header    RCVD_IN_AMI_DYN     eval:check_rbl('ami-lastexternal', 'PRIVATEKEY.combined.mail.abusix.zone.', '^127\.0\.0\.1[12]$')
+    header    RCVD_IN_AMI_DYN     eval:check_rbl('ami-lastexternal', 'PRIVATEKEY2.combined.mail.abusix.zone.', '^127\.0\.0\.1[12]$')
     describe  RCVD_IN_AMI_DYN     Received via a relay in Abusix Mail Intelligence Dynamic
     tflags    RCVD_IN_AMI_DYN     net
 
-    header    RCVD_IN_AMI_WHITE   eval:check_rbl('ami-firsttrusted', 'PRIVATEKEY.combined.mail.abusix.zone.', '127.0.2.1')
+    header    RCVD_IN_AMI_WHITE   eval:check_rbl('ami-firsttrusted', 'PRIVATEKEY2.combined.mail.abusix.zone.', '127.0.2.1')
     describe  RCVD_IN_AMI_WHITE   Received via a relay in Abusix Mail Intelligence White
     tflags    RCVD_IN_AMI_WHITE   nice net
 endif
 
 ifplugin Mail::SpamAssassin::Plugin::URIDNSBL
-    urirhsbl  URIBL_AMI_DBLACK    PRIVATEKEY.dblack.mail.abusix.zone. A
+    urirhsbl  URIBL_AMI_DBLACK    PRIVATEKEY2.dblack.mail.abusix.zone. A
     body      URIBL_AMI_DBLACK    eval:check_uridnsbl('URIBL_AMI_DBLACK')
     describe  URIBL_AMI_DBLACK    Contains a spam URL listed in the Abusix Mail Intelligence domain blocklist
     tflags    URIBL_AMI_DBLACK    net
 
-    #urirhssub URIBL_AMI_WHITE     PRIVATEKEY.white.mail.abusix.zone. A 127.0.2.1
+    #urirhssub URIBL_AMI_WHITE     PRIVATEKEY2.white.mail.abusix.zone. A 127.0.2.1
     #body      URIBL_AMI_WHITE     eval:check_uridnsbl('URIBL_AMI_WHITE')
     #describe  URIBL_AMI_WHITE     Contains a domain listed in the Abusix Mail Intelligence domain whitelist
     #tflags    URIBL_AMI_WHITE     nice net
